@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+		<beans:bean id="datasource"
+			class="org.apache.commons.dbcp.BasicDataSource">
+			<beans:property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+			<beans:property name="url" value="jdbc:mysql://innomysqlserver.mysql.database.azure.com:3306/innovate48?useSSL=true&amp;requireSSL=false&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC&amp;autoReconnect=true"/>
+			<beans:property name="username" value="mmss@innomysqlserver" />
+			<beans:property name="password" value="enoD}@2019" />
+			<beans:property name="initialSize" value="5" />
+			<beans:property name="maxActive" value="10" />
+			<beans:property name="validationQuery" value="select 1" />
+		</beans:bean>
+	
+</beans:beans>
+
+<!-- jdbc:mysql://innomysqlserver.mysql.database.azure.com:3306/innovate48 -->
+<!-- String url ="jdbc:mysql://%s:%s/%s[?verifyServerCertificate=true&useSSL=true&requireSSL=true]",{your_host},{your_port},{your_database}"; myDbConn = DriverManager.getConnection(url, {username@servername}, {your_password}"; -->
+<!-- innomysqlserver.mysql.database.azure.com -->

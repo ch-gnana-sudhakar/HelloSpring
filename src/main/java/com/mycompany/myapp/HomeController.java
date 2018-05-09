@@ -41,7 +41,7 @@ public class HomeController {
 	 * @throws IOException 
 	 * @throws GeneralSecurityException 
 	 */
-	@RequestMapping(value = "/", method = RequestMethod.GET)
+	@RequestMapping(value="/", method=RequestMethod.GET)
 	public String home(Locale locale, Model model) throws GeneralSecurityException, IOException, JoseException, ExecutionException, InterruptedException {
 		logger.info("Welcome home! The client locale is {}.", locale);
 		
@@ -124,7 +124,10 @@ public class HomeController {
 		            .setSubject("mailto:admin@domain.com");
 			
 			//String subscriptionStr = "{'endpoint':'https://fcm.googleapis.com/fcm/send/eaSUtPQP9Pk:APA91bE7SMP7Zeeq3G88oG0YiwUjodt232RzoK7vJpo40arZGTqDAqyy-8IOEWfpk2elZcEgrHAR9SbKFvgFOZQ4MR5tGzxTmQQ_9_XYiypctKFtH7JRJL7--A2guJv6BfNrCvpxkAeb','expirationTime':null,'keys':{'p256dh':'BIEPzraQaQYR5PA8TlCO-bFR56410mQk7qS2KdlJ4FL69PLGFMC2xE05Vbb2hNdDepAZEZ6Bxt4EGV09MFFHXqE','auth':'pezxmIEXpWBg-tHngEIDpQ'}}";
-			String subscriptionStr = "{'endpoint':'https://fcm.googleapis.com/fcm/send/fwF67TxjoFA:APA91bFhbmj3XVxXyp10gckhdl9syZkvqftZNYymjr0zRDUqe5brv-SYyzg1UOwtBesDAgahcp9o1j_xJbOQkEf1OMH-9dLUndQo18AfPo0uLvdzIIzOS3gykcHIlXc0sMW6jBlmj_1b','expirationTime':null,'keys':{'p256dh':'BPtduX2X9hu9bWzMAQQvGvqu7xOHornPQaTAqUP-FC9OkHHaDskWWmEQODtpdlkNj0AhfiUSBv-EUP0Au1mK1vM','auth':'Uo-qI2ajNoT8kpDsAzln6Q'}}";
+			//String subscriptionStr = "{'endpoint':'https://fcm.googleapis.com/fcm/send/fwF67TxjoFA:APA91bFhbmj3XVxXyp10gckhdl9syZkvqftZNYymjr0zRDUqe5brv-SYyzg1UOwtBesDAgahcp9o1j_xJbOQkEf1OMH-9dLUndQo18AfPo0uLvdzIIzOS3gykcHIlXc0sMW6jBlmj_1b','expirationTime':null,'keys':{'p256dh':'BPtduX2X9hu9bWzMAQQvGvqu7xOHornPQaTAqUP-FC9OkHHaDskWWmEQODtpdlkNj0AhfiUSBv-EUP0Au1mK1vM','auth':'Uo-qI2ajNoT8kpDsAzln6Q'}}";
+			//String subscriptionStr = "{'endpoint':'https://fcm.googleapis.com/fcm/send/flLRx4pj-jI:APA91bE0-5P_W989p3CJsVO86SADscFv6WjHQN8cM2da5beBi0Dmf9ID1XPyTUho60JkAdmiRyIgWgEkJNjfYYadvTISYO9y6ml4AqulgsBXZwfkvFQRrKDvhC0LXCX52BG3_t1GLIlB','expirationTime':null,'keys':{'p256dh':'BPL89a053ocRpvHDlVqtjNHZBnELCHfY4esN9JsiX_hvYQVShD2xfg0ZyTjsoqhiOJn0FzfRUZoLMvdF_qlrGjM','auth':'nBE7BHowqXNjsvFa27pjqA'}}";
+			//String subscriptionStr = "{'endpoint':'https://fcm.googleapis.com/fcm/send/cILmB-kupuA:APA91bHrzsk_8bdNxuYPuZCM8MYRhh6gNiqNk6zY6g_LbAiTBzXMSevJwPm7b9yUuRpTCLVyl8KR1Hiy1rEDse4bTq6zlLuQWSi4APOHzUr9gcLNVchb1XuYLeODjUPxtVYev0zl4EAz','expirationTime':null,'keys':{'p256dh':'BNDuR5YLkdesstXIIBcLOnyuUiYEe2GyrEdGXawapkNZuVq7GsJyTNoa8tfo4oVyIVRgmkHpJVRswRXrRpn6gcE','auth':'y52BDDM40tcmgzdDRrbInw'}}";
+			String subscriptionStr = "{'endpoint':'https://fcm.googleapis.com/fcm/send/cILmB-kupuA:APA91bHrzsk_8bdNxuYPuZCM8MYRhh6gNiqNk6zY6g_LbAiTBzXMSevJwPm7b9yUuRpTCLVyl8KR1Hiy1rEDse4bTq6zlLuQWSi4APOHzUr9gcLNVchb1XuYLeODjUPxtVYev0zl4EAz','expirationTime':null,'keys':{'p256dh':'BNDuR5YLkdesstXIIBcLOnyuUiYEe2GyrEdGXawapkNZuVq7GsJyTNoa8tfo4oVyIVRgmkHpJVRswRXrRpn6gcE','auth':'y52BDDM40tcmgzdDRrbInw'}}";
 			Gson gson = new Gson();
 			Subscription subscription = gson.fromJson(subscriptionStr, Subscription.class);
 			
