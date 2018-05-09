@@ -41,7 +41,7 @@ public class HomeController {
 	 * @throws IOException 
 	 * @throws GeneralSecurityException 
 	 */
-	@RequestMapping(value="/", method=RequestMethod.GET)
+	@RequestMapping(value="/app", method=RequestMethod.GET)
 	public String home(Locale locale, Model model) throws GeneralSecurityException, IOException, JoseException, ExecutionException, InterruptedException {
 		logger.info("Welcome home! The client locale is {}.", locale);
 		

@@ -17,7 +17,6 @@
 			<beans:property name="maxActive" value="10" />
 			<beans:property name="validationQuery" value="select 1" />
 		</beans:bean>
-	
 </beans:beans>
 
 <!-- jdbc:mysql://innomysqlserver.mysql.database.azure.com:3306/innovate48 -->
