@@ -4,21 +4,31 @@ import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.security.Security;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 import java.util.concurrent.ExecutionException;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.http.HttpResponse;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.jose4j.lang.JoseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.google.gson.Gson;
+import com.mycompany.myapp.dao.NotificationDAO;
+import com.mycompany.myapp.domain.TxnApprovalStatus;
 
 import nl.martijndwars.webpush.Notification;
 import nl.martijndwars.webpush.PushService;
@@ -28,10 +38,15 @@ import nl.martijndwars.webpush.Subscription;
  * Handles requests for the application home page.
  */
 @Controller
+@RequestMapping("/app")
 public class HomeController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	private static final int TTL = 255;
+	
+	@Autowired
+	private NotificationDAO notifcationDao;
+	
 	
 	/**
 	 * Simply selects the home view to render by returning its name.
@@ -41,7 +56,7 @@ public class HomeController {
 	 * @throws IOException 
 	 * @throws GeneralSecurityException 
 	 */
-	@RequestMapping(value="/app", method=RequestMethod.GET)
+	@RequestMapping(value="/app1", method=RequestMethod.GET)
 	public String home(Locale locale, Model model) throws GeneralSecurityException, IOException, JoseException, ExecutionException, InterruptedException {
 		logger.info("Welcome home! The client locale is {}.", locale);
 		
@@ -135,4 +150,65 @@ public class HomeController {
 			
 			HttpResponse response = pushService.send(notification);
 		}
+
+		@RequestMapping("/approve")
+		public String showApprovalPage(Model model) {
+			String page = "approve";
+			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+			
+			String userID = authentication.getName();
+			System.out.println(userID);
+			
+			TxnApprovalStatus txnInfo = notifcationDao.getTransactioInoByUserId(userID);
+			if(null != txnInfo) {
+				model.addAttribute("txnInfo", txnInfo);
+			} else {
+				model.addAttribute("message", "No Active transactions found for the userId");
+				page = "error";
+			}
+				
+			
+			return page;
+		}
+		
+		@RequestMapping(value="/updateTxnStatus",method= RequestMethod.GET)
+		public String txnUpdate(HttpServletRequest req,Model model) {
+			String status = req.getParameter("status");
+			
+			TxnApprovalStatus approvalStatus = new TxnApprovalStatus();
+			approvalStatus.setUserId(req.getParameter("userId"));
+			approvalStatus.setTxnReqId(req.getParameter("txnNumber"));
+			
+			if("Approve".equals(status)) {
+				approvalStatus.setStatus("A");
+			} else if("Decline".equals(status)) {
+				approvalStatus.setStatus("D");
+			}
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			approvalStatus.setTxnApprTime(sdf.format(new Date()));
+			notifcationDao.updateTxnInfo(approvalStatus);
+			
+			model.addAttribute("message",req.getParameter("status"));
+			model.addAttribute("txNo",req.getParameter("txnNumber"));
+			model.addAttribute("user",req.getParameter("userId"));
+			
+			
+			String page = "Txstatus";
+			
+			return page;
+		}
+		
+		@RequestMapping(value="/logout", method = RequestMethod.GET)
+		public String logoutPage (HttpServletRequest request, HttpServletResponse response) {
+		    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		    if (auth != null){    
+		        new SecurityContextLogoutHandler().logout(request, response, auth);
+		    }
+		    return "welcome";//You can redirect wherever you want, but generally it's a good practice to show login screen again.
+		}
+		
+		/*@RequestMapping(value="/welcome",method= RequestMethod.GET)
+		public String welcome(HttpServletRequest req,Model model) {
+			return  "welcome";
+		}*/
 }
