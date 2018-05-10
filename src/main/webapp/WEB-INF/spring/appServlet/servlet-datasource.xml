@@ -7,12 +7,23 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-		<beans:bean id="datasource"
+		<!-- <beans:bean id="datasource"
 			class="org.apache.commons.dbcp.BasicDataSource">
 			<beans:property name="driverClassName" value="com.mysql.jdbc.Driver"/>
 			<beans:property name="url" value="jdbc:mysql://innomysqlserver.mysql.database.azure.com:3306/innovate48?useSSL=true&amp;requireSSL=false&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC&amp;autoReconnect=true"/>
 			<beans:property name="username" value="mmss@innomysqlserver" />
 			<beans:property name="password" value="enoD}@2019" />
+			<beans:property name="initialSize" value="5" />
+			<beans:property name="maxActive" value="10" />
+			<beans:property name="validationQuery" value="select 1" />
+		</beans:bean> -->
+		
+		<beans:bean id="datasource"
+			class="org.apache.commons.dbcp.BasicDataSource">
+			<beans:property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+			<beans:property name="url" value="jdbc:mysql://iimss.mysql.database.azure.com:3306/innovate48?useSSL=true&amp;requireSSL=false&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC&amp;autoReconnect=true"/>
+			<beans:property name="username" value="iimnfcadmin@iimss" />
+			<beans:property name="password" value="Naresh@India" />
 			<beans:property name="initialSize" value="5" />
 			<beans:property name="maxActive" value="10" />
 			<beans:property name="validationQuery" value="select 1" />

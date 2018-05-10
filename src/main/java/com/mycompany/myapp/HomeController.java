@@ -159,7 +159,7 @@ public class HomeController {
 			String userID = authentication.getName();
 			System.out.println(userID);
 			
-			TxnApprovalStatus txnInfo = notifcationDao.getTransactioInoByUserId(userID);
+			TxnApprovalStatus txnInfo = notifcationDao.getTransactioInfoByUserId(userID);
 			if(null != txnInfo) {
 				model.addAttribute("txnInfo", txnInfo);
 			} else {

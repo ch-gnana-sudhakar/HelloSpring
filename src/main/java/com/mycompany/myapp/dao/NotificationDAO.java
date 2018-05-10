@@ -7,6 +7,6 @@ public interface NotificationDAO {
 	public UserPushSubscription getPushSubscriptionById(String user_id);
 	public TxnApprovalStatus getTxnApprovalStatus(String txnReqId);
 	public TxnApprovalStatus initiateTxnApprovalStatus(TxnApprovalStatus approvalStatus);
-	public TxnApprovalStatus getTransactioInoByUserId(String userID);
+	public TxnApprovalStatus getTransactioInfoByUserId(String userID);
 	public TxnApprovalStatus updateTxnInfo(TxnApprovalStatus approvalStatus);
 }

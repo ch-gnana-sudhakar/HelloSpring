@@ -26,7 +26,7 @@ public class NotificationDAOImpl implements NotificationDAO {
 
 	@Override
 	public UserPushSubscription getPushSubscriptionById(String nfcId) {
-		String sql = "SELECT * FROM user_push_subscriptions WHERE NFC_ID =" + nfcId;
+		String sql = "SELECT * FROM user_push_subscriptions WHERE NFC_ID ='" + nfcId + "'";
 		return (UserPushSubscription) jdbcTemplate.query(sql, new ResultSetExtractor() {
 
 			@Override
@@ -46,7 +46,7 @@ public class NotificationDAOImpl implements NotificationDAO {
 
 	@Override
 	public TxnApprovalStatus getTxnApprovalStatus(String txnReqId) {
-		String sql = "SELECT * FROM txn_approval_status WHERE txn_req_id =" + txnReqId;
+		String sql = "SELECT * FROM txn_approval_status WHERE txn_req_id ='" + txnReqId + "'";
 		return (TxnApprovalStatus) jdbcTemplate.query(sql, new ResultSetExtractor() {
 
 			@Override
@@ -69,18 +69,14 @@ public class NotificationDAOImpl implements NotificationDAO {
 	@Override
 	public TxnApprovalStatus initiateTxnApprovalStatus(TxnApprovalStatus approvalStatus) {
 		String sql = "INSERT INTO txn_approval_status (txn_req_id,status,txn_init_time,user_id,vender,amount) VALUES(?,?,?,?,?,?)";
-		/*Map<String, Object> map = new HashMap<String, Object>();
-		map.put("txn_req_id", approvalStatus.getTxnReqId());
-		map.put("status", "I");
-		map.put("txn_init_time", approvalStatus.getTxnInitTime());*/
 		jdbcTemplate.update(sql,new Object[] {approvalStatus.getTxnReqId(),"I",approvalStatus.getTxnInitTime(),approvalStatus.getUserId(),approvalStatus.getVendor(),approvalStatus.getAmount()});
 		return approvalStatus;
 
 	}
 
 	@Override
-	public TxnApprovalStatus getTransactioInoByUserId(String userID) {
-		String sql = "SELECT * FROM txn_approval_status WHERE status = 'I' and user_id ='" + userID+"'";
+	public TxnApprovalStatus getTransactioInfoByUserId(String userID) {
+		String sql = "SELECT * FROM txn_approval_status WHERE status = 'I' and user_id ='" + userID +"' order by txn_init_time desc";
 		return (TxnApprovalStatus) jdbcTemplate.query(sql, new ResultSetExtractor() {
 
 			@Override
@@ -109,10 +105,6 @@ public class NotificationDAOImpl implements NotificationDAO {
 	public TxnApprovalStatus updateTxnInfo(TxnApprovalStatus approvalStatus) {
 
 		String sql = "UPDATE txn_approval_status set status = ?,txn_appr_time = ? where txn_req_id = ? and USER_ID =?";
-		/*Map<String, Object> map = new HashMap<String, Object>();
-		map.put("txn_req_id", approvalStatus.getTxnReqId());
-		map.put("status", "I");
-		map.put("txn_init_time", approvalStatus.getTxnInitTime());*/
 		jdbcTemplate.update(sql,new Object[] {approvalStatus.getStatus(),approvalStatus.getTxnApprTime(),approvalStatus.getTxnReqId(),approvalStatus.getUserId()});
 		return approvalStatus;
 
